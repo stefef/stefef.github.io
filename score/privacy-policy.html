@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Score - Politique de Confidentialit&eacute;</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --psg-blue: #025596;
+      --psg-blue-light: #0369b4;
+      --psg-blue-dark: #01406f;
+      --surface: #f8fafc;
+      --surface-card: #ffffff;
+      --on-surface: #1a1a2e;
+      --on-surface-secondary: #4a5568;
+      --border: #e2e8f0;
+      --accent-gold: #f5a623;
+      --radius: 16px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--surface);
+      color: var(--on-surface);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, var(--psg-blue-dark) 0%, var(--psg-blue) 50%, var(--psg-blue-light) 100%);
+      color: white;
+      padding: 3rem 1.5rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at 30% 50%, rgba(255,255,255,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .app-icon {
+      width: 96px;
+      height: 96px;
+      border-radius: 18px;
+      display: inline-block;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      object-fit: cover;
+    }
+
+    .header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .header .subtitle {
+      font-size: 0.95rem;
+      opacity: 0.85;
+      font-weight: 400;
+    }
+
+    .updated {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.35rem 1rem;
+      background: rgba(255,255,255,0.15);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      backdrop-filter: blur(4px);
+    }
+
+    /* Main */
+    .container {
+      max-width: 720px;
+      margin: -2rem auto 3rem;
+      padding: 0 1.25rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .intro-card {
+      background: var(--surface-card);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04);
+      border: 1px solid var(--border);
+      font-size: 0.95rem;
+      color: var(--on-surface-secondary);
+    }
+
+    /* Sections */
+    .section {
+      background: var(--surface-card);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04);
+      border: 1px solid var(--border);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .section-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .icon-data { background: #e8f4fd; }
+    .icon-services { background: #fef3e2; }
+    .icon-cloud { background: #e8f8e8; }
+    .icon-ads { background: #fce8f0; }
+    .icon-security { background: #f0e8fc; }
+    .icon-rights { background: #e8ecfc; }
+    .icon-contact { background: #e8f4fd; }
+
+    .section h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--on-surface);
+      letter-spacing: -0.01em;
+    }
+
+    .section p {
+      font-size: 0.92rem;
+      color: var(--on-surface-secondary);
+      margin-bottom: 0.75rem;
+    }
+
+    .section p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Data items */
+    .data-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .data-item {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      padding: 0.875rem 1rem;
+      background: var(--surface);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .data-item-icon {
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .data-item strong {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--on-surface);
+      margin-bottom: 0.15rem;
+    }
+
+    .data-item span {
+      font-size: 0.85rem;
+      color: var(--on-surface-secondary);
+      line-height: 1.5;
+    }
+
+    /* Service chips */
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .service-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.75rem 1rem;
+      background: var(--surface);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .service-chip-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .service-chip strong {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--on-surface);
+    }
+
+    .service-chip span {
+      font-size: 0.8rem;
+      color: var(--on-surface-secondary);
+    }
+
+    /* Premium badge */
+    .premium-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.65rem;
+      background: linear-gradient(135deg, #f5a623, #f7c948);
+      color: #5a3e00;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    /* Rights list */
+    .rights-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .rights-list li {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      font-size: 0.92rem;
+      color: var(--on-surface-secondary);
+      padding: 0.875rem 1rem;
+      background: var(--surface);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .rights-list li strong {
+      color: var(--on-surface);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .rights-list li strong::before {
+      content: '\2713';
+      color: var(--psg-blue);
+      font-weight: 700;
+    }
+
+    /* Contact card */
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      background: var(--psg-blue);
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-top: 0.5rem;
+      transition: background 0.2s;
+    }
+
+    .contact-link:hover {
+      background: var(--psg-blue-light);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 2rem 1.5rem 3rem;
+      font-size: 0.82rem;
+      color: var(--on-surface-secondary);
+    }
+
+    .footer a {
+      color: var(--psg-blue);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .header { padding: 2.5rem 1.25rem 3.5rem; }
+      .header h1 { font-size: 1.5rem; }
+      .container { margin-top: -1.5rem; padding: 0 1rem; }
+      .section { padding: 1.5rem; }
+      .service-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-content">
+      <img src="icon.png" alt="Score App" class="app-icon">
+      <h1>Politique de Confidentialit&eacute;</h1>
+      <p class="subtitle">Application Score &mdash; Notation de jeux de soci&eacute;t&eacute;</p>
+      <span class="updated">Derni&egrave;re mise &agrave; jour : 27 mars 2026</span>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="intro-card">
+      L'application Score est une application gratuite (avec options Premium) con&ccedil;ue pour simplifier la notation de scores lors de jeux de soci&eacute;t&eacute;. Cette page vous informe de nos politiques concernant la collecte, l'utilisation et la divulgation des informations personnelles. En utilisant notre application, vous acceptez la collecte et l'utilisation d'informations en relation avec cette politique.
+    </div>
+
+    <!-- 1. Collecte -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon icon-data">&#128202;</div>
+        <h2>1. Collecte et Utilisation des Donn&eacute;es</h2>
+      </div>
+      <p>Pour une meilleure exp&eacute;rience, lors de l'utilisation de notre service, nous pouvons vous demander de nous fournir certaines informations :</p>
+      <ul class="data-list">
+        <li class="data-item">
+          <span class="data-item-icon">&#128241;</span>
+          <div>
+            <strong>Donn&eacute;es Locales</strong>
+            <span>Les pseudonymes, noms, pr&eacute;noms et photos de profil des joueurs sont stock&eacute;s uniquement sur votre appareil dans une base de donn&eacute;es locale.</span>
+          </div>
+        </li>
+        <li class="data-item">
+          <span class="data-item-icon">&#127919;</span>
+          <div>
+            <strong>Donn&eacute;es de Jeu</strong>
+            <span>Les scores, l'historique des parties et les statistiques sont g&eacute;n&eacute;r&eacute;s et conserv&eacute;s localement sur votre t&eacute;l&eacute;phone.</span>
+          </div>
+        </li>
+        <li class="data-item">
+          <span class="data-item-icon">&#128221;</span>
+          <div>
+            <strong>Logs Techniques</strong>
+            <span>L'application peut enregistrer des journaux d'erreurs pour aider au d&eacute;bogage, stock&eacute;s localement sur l'appareil.</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 2. Services Tiers -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon icon-services">&#128279;</div>
+        <h2>2. Services Tiers</h2>
+      </div>
+      <p>L'application utilise des services tiers qui peuvent collecter des informations :</p>
+      <div class="service-grid">
+        <div class="service-chip">
+          <span class="service-chip-icon">&#9654;&#65039;</span>
+          <div>
+            <strong>Google Play Services</strong>
+            <span>Fonctionnement de base sur Android</span>
+          </div>
+        </div>
+        <div class="service-chip">
+          <span class="service-chip-icon">&#128227;</span>
+          <div>
+            <strong>AdMob</strong>
+            <span>Affichage de publicit&eacute;s</span>
+          </div>
+        </div>
+        <div class="service-chip">
+          <span class="service-chip-icon">&#128293;</span>
+          <div>
+            <strong>Firebase</strong>
+            <span>Statistiques anonymes &amp; Remote Config</span>
+          </div>
+        </div>
+        <div class="service-chip">
+          <span class="service-chip-icon">&#9729;&#65039;</span>
+          <div>
+            <strong>Google Drive API</strong>
+            <span>Sauvegarde de vos donn&eacute;es</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Sauvegarde Cloud -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon icon-cloud">&#9729;&#65039;</div>
+        <h2>3. Sauvegarde Cloud (Google Drive)</h2>
+      </div>
+      <p>L'application Score propose une fonctionnalit&eacute; de sauvegarde automatique ou manuelle via Google Drive. Score n'acc&egrave;de qu'aux fichiers qu'elle a elle-m&ecirc;me cr&eacute;&eacute;s.</p>
+      <p>Vos donn&eacute;es de score et photos de profil sont transf&eacute;r&eacute;es de mani&egrave;re s&eacute;curis&eacute;e vers votre espace personnel Google Drive et ne sont jamais accessibles par le d&eacute;veloppeur de l'application.</p>
+    </div>
+
+    <!-- 4. Publicité -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon icon-ads">&#127912;</div>
+        <h2>4. Publicit&eacute; et Cookies</h2>
+      </div>
+      <p>Les publicit&eacute;s diffus&eacute;es dans l'application peuvent utiliser des cookies ou identifiants uniques pour collecter des informations anonymes afin de mesurer l'efficacit&eacute; des campagnes.</p>
+      <p>Les utilisateurs <span class="premium-badge">&#11088; Premium</span> disposent d'une option pour supprimer totalement ces publicit&eacute;s et les traceurs associ&eacute;s.</p>
+    </div>
+
+    <!-- 5. Sécurité -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon icon-security">&#128274;</div>
+        <h2>5. S&eacute;curit&eacute;</h2>
+      </div>
+      <p>Nous utilisons des technologies standards (SQLite, Google APIs s&eacute;curis&eacute;es) pour prot&eacute;ger vos informations.</p>
+    </div>
+
+    <!-- 6. RGPD -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon icon-rights">&#9878;&#65039;</div>
+        <h2>6. Vos Droits (RGPD)</h2>
+      </div>
+      <p>Conform&eacute;ment au RGPD, vous disposez des droits suivants :</p>
+      <ul class="rights-list">
+        <li><strong>Droit d'acc&egrave;s et de suppression :</strong> Vous pouvez supprimer tout joueur ou toute partie directement dans l'application, ce qui effacera d&eacute;finitivement les donn&eacute;es associ&eacute;es.</li>
+        <li><strong>Droit &agrave; l'oubli :</strong> La suppression de l'application entra&icirc;ne la suppression de toutes les donn&eacute;es locales.</li>
+      </ul>
+    </div>
+
+    <!-- 7. Contact -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon icon-contact">&#9993;&#65039;</div>
+        <h2>7. Contact</h2>
+      </div>
+      <p>Si vous avez des questions ou des suggestions concernant notre politique de confidentialit&eacute;, n'h&eacute;sitez pas &agrave; nous contacter :</p>
+      <a href="mailto:stef25.dev@gmail.com" class="contact-link">&#9993;&#65039; stef25.dev@gmail.com</a>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <p>Score &mdash; Application de notation pour jeux de soci&eacute;t&eacute;</p>
+    <p>&copy; 2026 Score. Tous droits r&eacute;serv&eacute;s.</p>
+  </footer>
+
+</body>
+</html>

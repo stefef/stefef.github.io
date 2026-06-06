@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Score — Sélection du dossier de sauvegarde</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f4f6f8;
+      color: #1a1a1a;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 32px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+    }
+    h1 {
+      color: #025596;
+      margin: 0 0 8px 0;
+      font-size: 22px;
+    }
+    p {
+      color: #4b5563;
+      margin: 8px 0;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid #e5e7eb;
+      border-top-color: #025596;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 16px auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .error { color: #dc2626; font-weight: 600; }
+    button {
+      margin-top: 16px;
+      padding: 12px 24px;
+      background: #025596;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover { background: #013d70; }
+  </style>
+</head>
+<body>
+  <div class="card" id="card">
+    <h1>Sélection du dossier</h1>
+    <p id="status">Chargement du sélecteur Drive…</p>
+    <div class="spinner" id="spinner"></div>
+  </div>
+
+  <script>
+    // =====================================================================
+    // CONFIGURATION — à remplir avant déploiement
+    // =====================================================================
+    //
+    // DEVELOPER_KEY : clé API publique Google Cloud (Google Picker API activée)
+    //   - Créer dans Cloud Console > APIs & Services > Credentials > Create API Key
+    //   - Restreindre par "HTTP referrer" au domaine de hosting
+    //     (ex: https://score-c1cfa.web.app/*)
+    //   - Activer l'API "Google Picker API" sur le projet
+    //
+    // CALLBACK_SCHEME : URL scheme custom déclaré côté app (Android intent-filter,
+    //   iOS CFBundleURLTypes). Doit matcher DrivePickerService._callbackScheme.
+    //
+    const DEVELOPER_KEY = 'AIzaSyDKsR7NKd_0Yz-hZksEG7SEUvOntXSWaPg';
+    const CALLBACK_SCHEME = 'score';
+
+    // =====================================================================
+    // Récupération du token OAuth depuis la query string
+    // =====================================================================
+    const urlParams = new URLSearchParams(window.location.search);
+    const oauthToken = urlParams.get('token');
+
+    function setStatus(text, isError) {
+      const statusEl = document.getElementById('status');
+      statusEl.textContent = text;
+      statusEl.className = isError ? 'error' : '';
+      document.getElementById('spinner').style.display = isError ? 'none' : 'block';
+    }
+
+    function redirectToApp(params) {
+      const qs = new URLSearchParams(params).toString();
+      window.location.href = `${CALLBACK_SCHEME}://picker?${qs}`;
+    }
+
+    function showRetry(message) {
+      setStatus(message, true);
+      const card = document.getElementById('card');
+      const btn = document.createElement('button');
+      btn.textContent = 'Annuler';
+      btn.onclick = () => redirectToApp({ cancelled: '1' });
+      card.appendChild(btn);
+    }
+
+    // =====================================================================
+    // Validation préalable
+    // =====================================================================
+    if (!oauthToken) {
+      showRetry('Token OAuth manquant. Relancez depuis l\'application.');
+    } else if (DEVELOPER_KEY === 'TODO_REMPLIR_API_KEY_PICKER') {
+      showRetry('Clé API Picker non configurée côté hosting.');
+    } else {
+      // Chargement asynchrone des libs Google
+      loadGoogleScript();
+    }
+
+    function loadGoogleScript() {
+      const script = document.createElement('script');
+      script.src = 'https://apis.google.com/js/api.js';
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
+        gapi.load('picker', { callback: createPicker, onerror: () =>
+          showRetry('Impossible de charger le Picker Drive.')
+        });
+      };
+      script.onerror = () => showRetry('Impossible de joindre les serveurs Google.');
+      document.head.appendChild(script);
+    }
+
+    function createPicker() {
+      try {
+        const view = new google.picker.DocsView()
+          .setIncludeFolders(true)
+          .setSelectFolderEnabled(true)
+          .setMimeTypes('application/vnd.google-apps.folder')
+          .setOwnedByMe(true);
+
+        const picker = new google.picker.PickerBuilder()
+          .addView(view)
+          .setOAuthToken(oauthToken)
+          .setDeveloperKey(DEVELOPER_KEY)
+          .setCallback(pickerCallback)
+          .setTitle('Choisissez un dossier pour vos sauvegardes Score')
+          .enableFeature(google.picker.Feature.NAV_HIDDEN)
+          .build();
+
+        picker.setVisible(true);
+        setStatus('Sélection en cours…');
+      } catch (e) {
+        showRetry('Erreur Picker: ' + e.message);
+      }
+    }
+
+    function pickerCallback(data) {
+      const Action = google.picker.Action;
+      const Response = google.picker.Response;
+      const Document = google.picker.Document;
+
+      if (data[Response.ACTION] === Action.PICKED) {
+        const doc = data[Response.DOCUMENTS][0];
+        redirectToApp({
+          folderId: doc[Document.ID],
+          folderName: doc[Document.NAME]
+        });
+      } else if (data[Response.ACTION] === Action.CANCEL) {
+        redirectToApp({ cancelled: '1' });
+      }
+    }
+  </script>
+</body>
+</html>

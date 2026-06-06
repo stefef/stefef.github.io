@@ -143,19 +143,30 @@
 
     function createPicker() {
       try {
-        const view = new google.picker.DocsView()
+        // Vue "Mon Drive" filtrée sur les dossiers, avec sélection de dossier
+        // ET navigation activée (drill-down dans les sous-dossiers).
+        // Pas de setOwnedByMe → permet aussi les dossiers partagés.
+        // Pas de NAV_HIDDEN → la barre latérale "Mon Drive / Partagés / Récents"
+        //   reste visible pour naviguer librement.
+        const myDriveView = new google.picker.DocsView(google.picker.ViewId.FOLDERS)
           .setIncludeFolders(true)
           .setSelectFolderEnabled(true)
           .setMimeTypes('application/vnd.google-apps.folder')
-          .setOwnedByMe(true);
+          .setParent('root');
+
+        const sharedView = new google.picker.DocsView(google.picker.ViewId.FOLDERS)
+          .setIncludeFolders(true)
+          .setSelectFolderEnabled(true)
+          .setMimeTypes('application/vnd.google-apps.folder')
+          .setEnableDrives(true);
 
         const picker = new google.picker.PickerBuilder()
-          .addView(view)
+          .addView(myDriveView)
+          .addView(sharedView)
           .setOAuthToken(oauthToken)
           .setDeveloperKey(DEVELOPER_KEY)
           .setCallback(pickerCallback)
           .setTitle('Choisissez un dossier pour vos sauvegardes Score')
-          .enableFeature(google.picker.Feature.NAV_HIDDEN)
           .build();
 
         picker.setVisible(true);

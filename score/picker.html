@@ -106,7 +106,30 @@
 
     function redirectToApp(params) {
       const qs = new URLSearchParams(params).toString();
-      window.location.href = `${CALLBACK_SCHEME}://picker?${qs}`;
+      const url = `${CALLBACK_SCHEME}://picker?${qs}`;
+      console.log('[Picker v4] redirectToApp →', url);
+
+      // Méthode 1 : click sur un <a> dynamiquement créé (plus fiable que
+      // window.location.href dans Chrome Custom Tabs sur Android).
+      try {
+        const link = document.createElement('a');
+        link.href = url;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (e) {
+        console.warn('[Picker v4] anchor click failed:', e);
+      }
+
+      // Méthode 2 : fallback location.href après 100ms si méthode 1 a échoué
+      setTimeout(() => {
+        try {
+          window.location.href = url;
+        } catch (e) {
+          console.error('[Picker v4] location.href failed:', e);
+        }
+      }, 200);
     }
 
     function showRetry(message) {
@@ -145,29 +168,29 @@
     }
 
     function createPicker() {
-      console.log('[Picker v3] createPicker called');
+      console.log('[Picker v4] createPicker called');
       try {
-        // Config minimale et propre :
-        // - ViewId.FOLDERS : vue dédiée aux dossiers (filtrage interne, navigation OK)
+        // Config v4 :
+        // - ViewId.FOLDERS : vue dédiée aux dossiers
         // - setSelectFolderEnabled(true) : permet de sélectionner un dossier
-        // - PAS de setMimeTypes (redondant avec FOLDERS, peut casser la nav)
-        // - PAS de setParent (laisser le Picker démarrer où il veut)
+        // - setMode(LIST) : UX list view avec flèches de navigation (vs GRID par défaut)
         const view = new google.picker.DocsView(google.picker.ViewId.FOLDERS)
-          .setSelectFolderEnabled(true);
+          .setSelectFolderEnabled(true)
+          .setMode(google.picker.DocsViewMode.LIST);
 
         const picker = new google.picker.PickerBuilder()
           .addView(view)
           .setOAuthToken(oauthToken)
           .setDeveloperKey(DEVELOPER_KEY)
           .setCallback(pickerCallback)
-          .setTitle('Choisissez un dossier pour vos sauvegardes Score')
+          .setTitle('Choisissez un dossier (v4)')
           .build();
 
         picker.setVisible(true);
         setStatus('Sélection en cours…');
-        console.log('[Picker v3] picker shown');
+        console.log('[Picker v4] picker shown');
       } catch (e) {
-        console.error('[Picker v3] createPicker error:', e);
+        console.error('[Picker v4] createPicker error:', e);
         showRetry('Erreur Picker: ' + e.message);
       }
     }

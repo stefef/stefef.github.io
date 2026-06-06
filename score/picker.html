@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Score — Sélection du dossier de sauvegarde</title>
+  <title>Score Picker v3 — Sélection du dossier de sauvegarde</title>
   <style>
     * { box-sizing: border-box; }
     body {
@@ -142,27 +142,18 @@
     }
 
     function createPicker() {
+      console.log('[Picker v3] createPicker called');
       try {
-        // Vue "Mon Drive" filtrée sur les dossiers, avec sélection de dossier
-        // ET navigation activée (drill-down dans les sous-dossiers).
-        // Pas de setOwnedByMe → permet aussi les dossiers partagés.
-        // Pas de NAV_HIDDEN → la barre latérale "Mon Drive / Partagés / Récents"
-        //   reste visible pour naviguer librement.
-        const myDriveView = new google.picker.DocsView(google.picker.ViewId.FOLDERS)
-          .setIncludeFolders(true)
-          .setSelectFolderEnabled(true)
-          .setMimeTypes('application/vnd.google-apps.folder')
-          .setParent('root');
-
-        const sharedView = new google.picker.DocsView(google.picker.ViewId.FOLDERS)
-          .setIncludeFolders(true)
-          .setSelectFolderEnabled(true)
-          .setMimeTypes('application/vnd.google-apps.folder')
-          .setEnableDrives(true);
+        // Config minimale et propre :
+        // - ViewId.FOLDERS : vue dédiée aux dossiers (filtrage interne, navigation OK)
+        // - setSelectFolderEnabled(true) : permet de sélectionner un dossier
+        // - PAS de setMimeTypes (redondant avec FOLDERS, peut casser la nav)
+        // - PAS de setParent (laisser le Picker démarrer où il veut)
+        const view = new google.picker.DocsView(google.picker.ViewId.FOLDERS)
+          .setSelectFolderEnabled(true);
 
         const picker = new google.picker.PickerBuilder()
-          .addView(myDriveView)
-          .addView(sharedView)
+          .addView(view)
           .setOAuthToken(oauthToken)
           .setDeveloperKey(DEVELOPER_KEY)
           .setCallback(pickerCallback)
@@ -171,7 +162,9 @@
 
         picker.setVisible(true);
         setStatus('Sélection en cours…');
+        console.log('[Picker v3] picker shown');
       } catch (e) {
+        console.error('[Picker v3] createPicker error:', e);
         showRetry('Erreur Picker: ' + e.message);
       }
     }
@@ -180,15 +173,31 @@
       const Action = google.picker.Action;
       const Response = google.picker.Response;
       const Document = google.picker.Document;
+      const action = data[Response.ACTION];
 
-      if (data[Response.ACTION] === Action.PICKED) {
-        const doc = data[Response.DOCUMENTS][0];
-        redirectToApp({
-          folderId: doc[Document.ID],
-          folderName: doc[Document.NAME]
-        });
-      } else if (data[Response.ACTION] === Action.CANCEL) {
+      console.log('[Picker v3] callback fired — action:', action, 'data:', data);
+
+      if (action === Action.PICKED) {
+        const docs = data[Response.DOCUMENTS];
+        console.log('[Picker v3] PICKED — documents:', docs);
+        if (docs && docs.length > 0) {
+          const doc = docs[0];
+          const folderId = doc[Document.ID];
+          const folderName = doc[Document.NAME];
+          console.log('[Picker v3] redirecting to app with folderId=', folderId, 'name=', folderName);
+          redirectToApp({
+            folderId: folderId,
+            folderName: folderName
+          });
+        } else {
+          console.warn('[Picker v3] PICKED but no documents');
+          redirectToApp({ cancelled: '1' });
+        }
+      } else if (action === Action.CANCEL) {
+        console.log('[Picker v3] CANCEL');
         redirectToApp({ cancelled: '1' });
+      } else {
+        console.log('[Picker v3] other action:', action);
       }
     }
   </script>

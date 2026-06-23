@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Score - Politique de Confidentialit&eacute;</title>
+  <title>Score - Politique de Confidentialit&eacute; / Privacy Policy</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -32,6 +32,52 @@
       color: var(--on-surface);
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+    }
+
+    /* Language switch */
+    .lang-switch {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 100;
+      display: flex;
+      gap: 0.4rem;
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(8px);
+      padding: 0.3rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .lang-switch button {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: transparent;
+      border: none;
+      color: #fff;
+      padding: 0.4rem 0.65rem;
+      border-radius: 9px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      opacity: 0.75;
+      transition: background 0.2s, opacity 0.2s;
+    }
+
+    .lang-switch button .flag {
+      font-size: 1.05rem;
+      line-height: 1;
+    }
+
+    .lang-switch button:hover { opacity: 1; }
+
+    .lang-switch button.active {
+      background: #fff;
+      color: var(--psg-blue-dark);
+      opacity: 1;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
 
     /* Header */
@@ -321,6 +367,10 @@
       font-weight: 500;
     }
 
+    /* Language visibility */
+    .lang-content { display: none; }
+    .lang-content.active { display: block; }
+
     /* Responsive */
     @media (max-width: 480px) {
       .header { padding: 2.5rem 1.25rem 3.5rem; }
@@ -328,155 +378,330 @@
       .container { margin-top: -1.5rem; padding: 0 1rem; }
       .section { padding: 1.5rem; }
       .service-grid { grid-template-columns: 1fr; }
+      .lang-switch { top: 0.6rem; right: 0.6rem; }
+      .lang-switch button { padding: 0.35rem 0.5rem; font-size: 0.8rem; }
     }
   </style>
 </head>
 <body>
 
-  <div class="header">
-    <div class="header-content">
-      <img src="icon.png" alt="Score App" class="app-icon">
-      <h1>Politique de Confidentialit&eacute;</h1>
-      <p class="subtitle">Application Score &mdash; Notation de jeux de soci&eacute;t&eacute;</p>
-      <span class="updated">Derni&egrave;re mise &agrave; jour : 27 mars 2026</span>
-    </div>
+  <div class="lang-switch">
+    <button id="btn-fr" class="active" onclick="switchLang('fr')"><span class="flag">&#127467;&#127479;</span> FR</button>
+    <button id="btn-en" onclick="switchLang('en')"><span class="flag">&#127468;&#127463;</span> EN</button>
   </div>
 
-  <div class="container">
+  <!-- ==================== FRAN&Ccedil;AIS ==================== -->
+  <div id="fr" class="lang-content active">
 
-    <div class="intro-card">
-      L'application Score est une application gratuite (avec options Premium) con&ccedil;ue pour simplifier la notation de scores lors de jeux de soci&eacute;t&eacute;. Cette page vous informe de nos politiques concernant la collecte, l'utilisation et la divulgation des informations personnelles. En utilisant notre application, vous acceptez la collecte et l'utilisation d'informations en relation avec cette politique.
+    <div class="header">
+      <div class="header-content">
+        <img src="icon.png" alt="Score App" class="app-icon">
+        <h1>Politique de Confidentialit&eacute;</h1>
+        <p class="subtitle">Application Score &mdash; Notation de jeux de soci&eacute;t&eacute;</p>
+        <span class="updated">Derni&egrave;re mise &agrave; jour : 27 mars 2026</span>
+      </div>
     </div>
 
-    <!-- 1. Collecte -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-data">&#128202;</div>
-        <h2>1. Collecte et Utilisation des Donn&eacute;es</h2>
-      </div>
-      <p>Pour une meilleure exp&eacute;rience, lors de l'utilisation de notre service, nous pouvons vous demander de nous fournir certaines informations :</p>
-      <ul class="data-list">
-        <li class="data-item">
-          <span class="data-item-icon">&#128241;</span>
-          <div>
-            <strong>Donn&eacute;es Locales</strong>
-            <span>Les pseudonymes, noms, pr&eacute;noms et photos de profil des joueurs sont stock&eacute;s uniquement sur votre appareil dans une base de donn&eacute;es locale.</span>
-          </div>
-        </li>
-        <li class="data-item">
-          <span class="data-item-icon">&#127919;</span>
-          <div>
-            <strong>Donn&eacute;es de Jeu</strong>
-            <span>Les scores, l'historique des parties et les statistiques sont g&eacute;n&eacute;r&eacute;s et conserv&eacute;s localement sur votre t&eacute;l&eacute;phone.</span>
-          </div>
-        </li>
-        <li class="data-item">
-          <span class="data-item-icon">&#128221;</span>
-          <div>
-            <strong>Logs Techniques</strong>
-            <span>L'application peut enregistrer des journaux d'erreurs pour aider au d&eacute;bogage, stock&eacute;s localement sur l'appareil.</span>
-          </div>
-        </li>
-      </ul>
-    </div>
+    <div class="container">
 
-    <!-- 2. Services Tiers -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-services">&#128279;</div>
-        <h2>2. Services Tiers</h2>
+      <div class="intro-card">
+        L'application Score est une application gratuite (avec options Premium) con&ccedil;ue pour simplifier la notation de scores lors de jeux de soci&eacute;t&eacute;. Cette page vous informe de nos politiques concernant la collecte, l'utilisation et la divulgation des informations personnelles. En utilisant notre application, vous acceptez la collecte et l'utilisation d'informations en relation avec cette politique.
       </div>
-      <p>L'application utilise des services tiers qui peuvent collecter des informations :</p>
-      <div class="service-grid">
-        <div class="service-chip">
-          <span class="service-chip-icon">&#9654;&#65039;</span>
-          <div>
-            <strong>Google Play Services</strong>
-            <span>Fonctionnement de base sur Android</span>
+
+      <!-- 1. Collecte -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon icon-data">&#128202;</div>
+          <h2>1. Collecte et Utilisation des Donn&eacute;es</h2>
+        </div>
+        <p>Pour une meilleure exp&eacute;rience, lors de l'utilisation de notre service, nous pouvons vous demander de nous fournir certaines informations :</p>
+        <ul class="data-list">
+          <li class="data-item">
+            <span class="data-item-icon">&#128241;</span>
+            <div>
+              <strong>Donn&eacute;es Locales</strong>
+              <span>Les pseudonymes, noms, pr&eacute;noms et photos de profil des joueurs sont stock&eacute;s uniquement sur votre appareil dans une base de donn&eacute;es locale.</span>
+            </div>
+          </li>
+          <li class="data-item">
+            <span class="data-item-icon">&#127919;</span>
+            <div>
+              <strong>Donn&eacute;es de Jeu</strong>
+              <span>Les scores, l'historique des parties et les statistiques sont g&eacute;n&eacute;r&eacute;s et conserv&eacute;s localement sur votre t&eacute;l&eacute;phone.</span>
+            </div>
+          </li>
+          <li class="data-item">
+            <span class="data-item-icon">&#128221;</span>
+            <div>
+              <strong>Logs Techniques</strong>
+              <span>L'application peut enregistrer des journaux d'erreurs pour aider au d&eacute;bogage, stock&eacute;s localement sur l'appareil.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 2. Services Tiers -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon icon-services">&#128279;</div>
+          <h2>2. Services Tiers</h2>
+        </div>
+        <p>L'application utilise des services tiers qui peuvent collecter des informations :</p>
+        <div class="service-grid">
+          <div class="service-chip">
+            <span class="service-chip-icon">&#9654;&#65039;</span>
+            <div>
+              <strong>Google Play Services</strong>
+              <span>Fonctionnement de base sur Android</span>
+            </div>
+          </div>
+          <div class="service-chip">
+            <span class="service-chip-icon">&#128227;</span>
+            <div>
+              <strong>AdMob</strong>
+              <span>Affichage de publicit&eacute;s</span>
+            </div>
+          </div>
+          <div class="service-chip">
+            <span class="service-chip-icon">&#128293;</span>
+            <div>
+              <strong>Firebase</strong>
+              <span>Statistiques anonymes &amp; Remote Config</span>
+            </div>
+          </div>
+          <div class="service-chip">
+            <span class="service-chip-icon">&#9729;&#65039;</span>
+            <div>
+              <strong>Google Drive API</strong>
+              <span>Sauvegarde de vos donn&eacute;es</span>
+            </div>
           </div>
         </div>
-        <div class="service-chip">
-          <span class="service-chip-icon">&#128227;</span>
-          <div>
-            <strong>AdMob</strong>
-            <span>Affichage de publicit&eacute;s</span>
-          </div>
+      </div>
+
+      <!-- 3. Sauvegarde Cloud -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon icon-cloud">&#9729;&#65039;</div>
+          <h2>3. Sauvegarde Cloud (Google Drive)</h2>
         </div>
-        <div class="service-chip">
-          <span class="service-chip-icon">&#128293;</span>
-          <div>
-            <strong>Firebase</strong>
-            <span>Statistiques anonymes &amp; Remote Config</span>
-          </div>
+        <p>L'application Score propose une fonctionnalit&eacute; de sauvegarde automatique ou manuelle via Google Drive. Score n'acc&egrave;de qu'aux fichiers qu'elle a elle-m&ecirc;me cr&eacute;&eacute;s.</p>
+        <p>Vos donn&eacute;es de score et photos de profil sont transf&eacute;r&eacute;es de mani&egrave;re s&eacute;curis&eacute;e vers votre espace personnel Google Drive et ne sont jamais accessibles par le d&eacute;veloppeur de l'application.</p>
+      </div>
+
+      <!-- 4. Publicit&eacute; -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon icon-ads">&#127912;</div>
+          <h2>4. Publicit&eacute; et Cookies</h2>
         </div>
-        <div class="service-chip">
-          <span class="service-chip-icon">&#9729;&#65039;</span>
-          <div>
-            <strong>Google Drive API</strong>
-            <span>Sauvegarde de vos donn&eacute;es</span>
-          </div>
+        <p>Les publicit&eacute;s diffus&eacute;es dans l'application peuvent utiliser des cookies ou identifiants uniques pour collecter des informations anonymes afin de mesurer l'efficacit&eacute; des campagnes.</p>
+        <p>Les utilisateurs <span class="premium-badge">&#11088; Premium</span> disposent d'une option pour supprimer totalement ces publicit&eacute;s et les traceurs associ&eacute;s.</p>
+      </div>
+
+      <!-- 5. S&eacute;curit&eacute; -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon icon-security">&#128274;</div>
+          <h2>5. S&eacute;curit&eacute;</h2>
         </div>
+        <p>Nous utilisons des technologies standards (SQLite, Google APIs s&eacute;curis&eacute;es) pour prot&eacute;ger vos informations.</p>
       </div>
+
+      <!-- 6. RGPD -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon icon-rights">&#9878;&#65039;</div>
+          <h2>6. Vos Droits (RGPD)</h2>
+        </div>
+        <p>Conform&eacute;ment au RGPD, vous disposez des droits suivants :</p>
+        <ul class="rights-list">
+          <li><strong>Droit d'acc&egrave;s et de suppression :</strong> Vous pouvez supprimer tout joueur ou toute partie directement dans l'application, ce qui effacera d&eacute;finitivement les donn&eacute;es associ&eacute;es.</li>
+          <li><strong>Droit &agrave; l'oubli :</strong> La suppression de l'application entra&icirc;ne la suppression de toutes les donn&eacute;es locales.</li>
+        </ul>
+      </div>
+
+      <!-- 7. Contact -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon icon-contact">&#9993;&#65039;</div>
+          <h2>7. Contact</h2>
+        </div>
+        <p>Si vous avez des questions ou des suggestions concernant notre politique de confidentialit&eacute;, n'h&eacute;sitez pas &agrave; nous contacter :</p>
+        <a href="mailto:stef25.dev@gmail.com" class="contact-link">&#9993;&#65039; stef25.dev@gmail.com</a>
+      </div>
+
     </div>
 
-    <!-- 3. Sauvegarde Cloud -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-cloud">&#9729;&#65039;</div>
-        <h2>3. Sauvegarde Cloud (Google Drive)</h2>
-      </div>
-      <p>L'application Score propose une fonctionnalit&eacute; de sauvegarde automatique ou manuelle via Google Drive. Score n'acc&egrave;de qu'aux fichiers qu'elle a elle-m&ecirc;me cr&eacute;&eacute;s.</p>
-      <p>Vos donn&eacute;es de score et photos de profil sont transf&eacute;r&eacute;es de mani&egrave;re s&eacute;curis&eacute;e vers votre espace personnel Google Drive et ne sont jamais accessibles par le d&eacute;veloppeur de l'application.</p>
-    </div>
-
-    <!-- 4. Publicité -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-ads">&#127912;</div>
-        <h2>4. Publicit&eacute; et Cookies</h2>
-      </div>
-      <p>Les publicit&eacute;s diffus&eacute;es dans l'application peuvent utiliser des cookies ou identifiants uniques pour collecter des informations anonymes afin de mesurer l'efficacit&eacute; des campagnes.</p>
-      <p>Les utilisateurs <span class="premium-badge">&#11088; Premium</span> disposent d'une option pour supprimer totalement ces publicit&eacute;s et les traceurs associ&eacute;s.</p>
-    </div>
-
-    <!-- 5. Sécurité -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-security">&#128274;</div>
-        <h2>5. S&eacute;curit&eacute;</h2>
-      </div>
-      <p>Nous utilisons des technologies standards (SQLite, Google APIs s&eacute;curis&eacute;es) pour prot&eacute;ger vos informations.</p>
-    </div>
-
-    <!-- 6. RGPD -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-rights">&#9878;&#65039;</div>
-        <h2>6. Vos Droits (RGPD)</h2>
-      </div>
-      <p>Conform&eacute;ment au RGPD, vous disposez des droits suivants :</p>
-      <ul class="rights-list">
-        <li><strong>Droit d'acc&egrave;s et de suppression :</strong> Vous pouvez supprimer tout joueur ou toute partie directement dans l'application, ce qui effacera d&eacute;finitivement les donn&eacute;es associ&eacute;es.</li>
-        <li><strong>Droit &agrave; l'oubli :</strong> La suppression de l'application entra&icirc;ne la suppression de toutes les donn&eacute;es locales.</li>
-      </ul>
-    </div>
-
-    <!-- 7. Contact -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon icon-contact">&#9993;&#65039;</div>
-        <h2>7. Contact</h2>
-      </div>
-      <p>Si vous avez des questions ou des suggestions concernant notre politique de confidentialit&eacute;, n'h&eacute;sitez pas &agrave; nous contacter :</p>
-      <a href="mailto:stef25.dev@gmail.com" class="contact-link">&#9993;&#65039; stef25.dev@gmail.com</a>
-    </div>
+    <footer class="footer">
+      <p>Score &mdash; Application de notation pour jeux de soci&eacute;t&eacute;</p>
+      <p>&copy; 2026 Score. Tous droits r&eacute;serv&eacute;s.</p>
+    </footer>
 
   </div>
 
-  <footer class="footer">
-    <p>Score &mdash; Application de notation pour jeux de soci&eacute;t&eacute;</p>
-    <p>&copy; 2026 Score. Tous droits r&eacute;serv&eacute;s.</p>
-  </footer>
+  <!-- ==================== ENGLISH ==================== -->
+  <div id="en" class="lang-content">
 
+    <div class="header">
+      <div class="header-content">
+        <img src="icon.png" alt="Score App" class="app-icon">
+        <h1>Privacy Policy</h1>
+        <p class="subtitle">Score App &mdash; Board game scorekeeping</p>
+        <span class="updated">Last updated: March 27, 2026</span>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="intro-card">
+        The Score app is a free application (with Premium options) designed to simplify scorekeeping during board games. This page informs you of our policies regarding the collection, use, and disclosure of personal information. By using our app, you agree to the collection and use of information in accordance with this policy.
+      </div>
+
+      <!-- 1. Collection -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon icon-data">&#128202;</div>
+          <h2>1. Data Collection and Use</h2>
+        </div>
+        <p>For a better experience, while using our service, we may ask you to provide us with certain information:</p>
+        <ul class="data-list">
+          <li class="data-item">
+            <span class="data-item-icon">&#128241;</span>
+            <div>
+              <strong>Local Data</strong>
+              <span>Players' nicknames, first names, last names, and profile pictures are stored only on your device in a local database.</span>
+            </div>
+          </li>
+          <li class="data-item">
+            <span class="data-item-icon">&#127919;</span>
+            <div>
+              <strong>Game Data</strong>
+              <span>Scores, game history, and statistics are generated and kept locally on your phone.</span>
+            </div>
+          </li>
+          <li class="data-item">
+            <span class="data-item-icon">&#128221;</span>
+            <div>
+              <strong>Technical Logs</strong>
+              <span>The app may record error logs to help with debugging, stored locally on the device.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 2. Third-Party Services -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon icon-services">&#128279;</div>
+          <h2>2. Third-Party Services</h2>
+        </div>
+        <p>The app uses third-party services that may collect information:</p>
+        <div class="service-grid">
+          <div class="service-chip">
+            <span class="service-chip-icon">&#9654;&#65039;</span>
+            <div>
+              <strong>Google Play Services</strong>
+              <span>Core functionality on Android</span>
+            </div>
+          </div>
+          <div class="service-chip">
+            <span class="service-chip-icon">&#128227;</span>
+            <div>
+              <strong>AdMob</strong>
+              <span>Displaying advertisements</span>
+            </div>
+          </div>
+          <div class="service-chip">
+            <span class="service-chip-icon">&#128293;</span>
+            <div>
+              <strong>Firebase</strong>
+              <span>Anonymous analytics &amp; Remote Config</span>
+            </div>
+          </div>
+          <div class="service-chip">
+            <span class="service-chip-icon">&#9729;&#65039;</span>
+            <div>
+              <strong>Google Drive API</strong>
+              <span>Backup of your data</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Cloud Backup -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon icon-cloud">&#9729;&#65039;</div>
+          <h2>3. Cloud Backup (Google Drive)</h2>
+        </div>
+        <p>The Score app offers an automatic or manual backup feature via Google Drive. Score only accesses the files it has created itself.</p>
+        <p>Your score data and profile pictures are securely transferred to your personal Google Drive space and are never accessible by the app developer.</p>
+      </div>
+
+      <!-- 4. Advertising -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon icon-ads">&#127912;</div>
+          <h2>4. Advertising and Cookies</h2>
+        </div>
+        <p>Advertisements served within the app may use cookies or unique identifiers to collect anonymous information in order to measure the effectiveness of campaigns.</p>
+        <p><span class="premium-badge">&#11088; Premium</span> users have an option to completely remove these advertisements and the associated trackers.</p>
+      </div>
+
+      <!-- 5. Security -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon icon-security">&#128274;</div>
+          <h2>5. Security</h2>
+        </div>
+        <p>We use standard technologies (SQLite, secure Google APIs) to protect your information.</p>
+      </div>
+
+      <!-- 6. GDPR -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon icon-rights">&#9878;&#65039;</div>
+          <h2>6. Your Rights (GDPR)</h2>
+        </div>
+        <p>In accordance with the GDPR, you have the following rights:</p>
+        <ul class="rights-list">
+          <li><strong>Right of access and erasure:</strong> You can delete any player or any game directly in the app, which will permanently erase the associated data.</li>
+          <li><strong>Right to be forgotten:</strong> Uninstalling the app deletes all local data.</li>
+        </ul>
+      </div>
+
+      <!-- 7. Contact -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon icon-contact">&#9993;&#65039;</div>
+          <h2>7. Contact</h2>
+        </div>
+        <p>If you have any questions or suggestions regarding our privacy policy, please do not hesitate to contact us:</p>
+        <a href="mailto:stef25.dev@gmail.com" class="contact-link">&#9993;&#65039; stef25.dev@gmail.com</a>
+      </div>
+
+    </div>
+
+    <footer class="footer">
+      <p>Score &mdash; Scorekeeping app for board games</p>
+      <p>&copy; 2026 Score. All rights reserved.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    function switchLang(lang) {
+      document.getElementById('fr').classList.toggle('active', lang === 'fr');
+      document.getElementById('en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.documentElement.lang = lang;
+    }
+    // Auto-detect browser language
+    if (navigator.language && !navigator.language.startsWith('fr')) {
+      switchLang('en');
+    }
+  </script>
 </body>
 </html>
